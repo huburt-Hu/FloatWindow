@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.yhao.fixedfloatwindow.R;
+import com.squareup.leakcanary.LeakCanary;
 import com.yhao.floatwindow.FloatWindow;
 import com.yhao.floatwindow.MoveType;
 import com.yhao.floatwindow.Screen;
@@ -21,7 +22,18 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
+        // Normal app init code...
 
+        initFloatView();
+    }
+
+    private void initFloatView() {
         ImageView imageView = new ImageView(getApplicationContext());
         imageView.setImageResource(R.drawable.icon);
 

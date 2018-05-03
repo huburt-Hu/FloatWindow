@@ -35,11 +35,9 @@ public class FloatWindow {
         return mFloatWindowMap == null ? null : mFloatWindowMap.get(tag);
     }
 
-    private static B mBuilder = null;
-
     @MainThread
     public static B with(@NonNull Context applicationContext) {
-        return mBuilder = new B(applicationContext);
+        return new B(applicationContext);
     }
 
     public static void destroy() {
@@ -69,7 +67,7 @@ public class FloatWindow {
         long mDuration = 300;
         TimeInterpolator mInterpolator;
         private String mTag = mDefaultTag;
-         boolean mDesktopShow;
+        boolean mDesktopShow;
 
         private B() {
 
